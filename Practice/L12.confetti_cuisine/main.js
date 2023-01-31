@@ -3,7 +3,28 @@ const express = require("express"),
     app = express(),
     homeController = require("./controllers/homeController"),
     layouts = require("express-ejs-layouts"),
-    errorController = require("./controllers/errorController");
+    errorController = require("./controllers/errorController"),
+    Subscriber = require("./model/subscriber");
+
+// set database
+const mongoose = require("mongoose");
+const { db } = require("./model/subscriber");
+mongoose.connect(
+    "mongodb://localhost:27017/recipe_db",
+    {useNewUrlParser: true}
+);
+
+db.once("open", () => {
+    console.log("Successfully connecyed to MongoDB using Mongoose!");
+});
+
+var myQuery = Subscriber.findOne({
+    name: "Jon Wexler"
+})
+    .where("email", /wexler/);
+myQuery.exec((Error, data) => {
+    if (data) console.log(data.name);
+});
 
 // set port
 app.set("port", process.env.PORT || 3000);
