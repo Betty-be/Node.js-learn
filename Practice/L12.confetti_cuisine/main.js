@@ -6,15 +6,15 @@ const express = require("express"),
     errorController = require("./controllers/errorController"),
     mongoose = require("mongoose"),
     Subscriber = require("./models/subscriber"),
-    subscriberController = require("./controllers/subscribersController");
+    subscribersController = require("./controllers/subscribersController");
 
 mongoose.Promise = global.Promise
 
 
-// set database
-const { db } = require("./models/subscriber");
+const { db } = require("./models/subscriber")
+// set up the database connection
 mongoose.connect(
-    "mongodb://localhost:27017/recipe_db",
+    "mongodb://localhost:27017/confetti_cuisine",
     {useNewUrlParser: true}
 );
 
@@ -22,7 +22,7 @@ db.once("open", () => {
     console.log("Successfully connecyed to MongoDB using Mongoose!");
 });
 
-app.get("/subscribers", subscriberController.getAllSubscribers, (req, res, next) => {
+app.get("/subscribers", subscribersController.getAllSubscribers, (req, res, next) => {
     console.log(req.data);
     res.send(req.data);
 });
@@ -54,8 +54,15 @@ app.get("/", (req, res) => {
 app.get("/courses", homeController.showCourses);
 app.get("/contact", homeController.showSignUp);
 app.post("/contact", homeController.postedSignUpForm);
-app.get("/contact", subscriberController.getSubscriptionPage);
-app.post("/subscribe", subscriberController.saveSubcriber);
+
+// add a route to view all subscribers.
+app.get("/subscribers", subscribersController.getAllSubscribers);
+
+// add a route to view the contact page.
+app.get("/contact", subscribersController.getSubscriptionPage);
+
+// add a route to handle posted form data.
+app.post("/subscribe", subscribersController.saveSubcriber);
 
 
 // error handing routes

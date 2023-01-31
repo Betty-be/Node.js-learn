@@ -5,4 +5,5 @@ const mongoose = require("mongoose"),
         zipCode: Number
     });
 
+// assign subscriber model to the module, that other modules in the application could accessible the subscriber model
 module.exports = mongoose.model("Subscriber", subscriberSchema);
