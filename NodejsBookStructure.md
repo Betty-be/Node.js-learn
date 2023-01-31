@@ -8,7 +8,7 @@ Book Structure
 - [ ] L2.running a Node.js application
 ## U1 start
 - [ ] L3.creating a Node.js module
-  - [ ] npm
+  - npm
 - [ ] L4.building a simple web server in Node.js
 - [ ] L5.handling incoming data
 - [ ] L6.writing better routes and serving external files
@@ -21,9 +21,12 @@ Book Structure
 - [ ] L12.Capstone: enhance the web application
 ## U3 Database [MongoDB](Note-MongoDB.md)
 - [ ] L13.setting up a `MongoDB` database
-  - connect MongoDB to application<br>
-        `npm i mongodb -S`
+  - connect MongoDB to application
+  - `npm i mongodb -S`
 - [ ] L14.building models with `Mongoose`
+  - A `model` is defined along with a schema, which dictates what type of data can be saved to the database.
+  - `npm i mongoose -S`
+    - With  Mongoose, you no longer need to require mongodb at the top of main.js or use any of the  MongoDB code from lesson 13.
 - [ ] L15.connecting controllers and models
 - [ ] L16.Capstone: Saving user subscriptions
 ## U4 Building a user model
