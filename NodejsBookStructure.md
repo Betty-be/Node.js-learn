@@ -19,31 +19,10 @@ Book Structure
 - [ ] L10.connecting views with templates
 - [ ] L11.configurations and error handling
 - [ ] L12.Capstone: enhance the web application
-## U3 Database
+## U3 Database [MongoDB](Note-MongoDB.md)
 - [ ] L13.setting up a `MongoDB` database
-  <details><summary>INSTALL STEP</summary>
-  
-    `brew tap mongodb/brew` <br>
-    `brew install mongodb-community`
-     >include the MongoDB Server processes `mongod` and `mongos`, the `MongoDB Database Tools`, and the `install_compass` script to separately install `MongoDB Compass`.
-
-    `mongod --dbpath ~/data/db`
-     > place MongoDB's data in your home directory
-  </details>
-  <details><summary>Start&Stop</summary>
-  
-    `brew services start mongodb-community` <br>
-    `mongosh`<br>
-     >start mongodb-community, then run mongosh in terminal,will start MongoDB shell.
-     
-    `brew services stop mongodb-community`
-  
-  </details>
-  <details><summary>UNINSTALL STEP</summary>
-  
-   `brew uninstall mongodb-community`<br>
-   `brew uninstall mongodb-database-tools`
-  </details>
+  - connect MongoDB to application<br>
+        `npm i mongodb -S`
 - [ ] L14.building models with `Mongoose`
 - [ ] L15.connecting controllers and models
 - [ ] L16.Capstone: Saving user subscriptions
