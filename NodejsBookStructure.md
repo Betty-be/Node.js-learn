@@ -31,6 +31,8 @@ Book Structure
 - [ ] L16.Capstone: Saving user subscriptions
 ## U4 Building a user model
 - [ ] L17.improving your data model
+  - SchemaTypes: String, Date, Array, Mixed, ObjectId
+  - test model
 - [ ] L18.building the user model
 - [ ] L19.creating and reading your models
 - [ ] L20.updating and deleting your models
