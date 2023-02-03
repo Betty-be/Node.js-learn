@@ -2,7 +2,7 @@ Node.js
 ===
 Install Node.js: <https://nodejs.org/en/>
 >Node Version Manager(NVM)<br>
-```shell
+```console
 brew install nvm
 ```
 >>manage one version or multipleversions of Node.js on your computer.<br>
@@ -15,7 +15,7 @@ When install Node.js,also get `npm`.<br>
 the Node.js ecosystem of external libraries,similar to pip in Python and gem in Ruby.<br>
 initialing the application with npm<br>
 `terminal` remember change directory
-```shell
+```console
 npm init
 ```
 provide constant for use where HTTPstatus codes are needed in your application's responses<br>
