@@ -1,16 +1,3 @@
-# Node.js
-initialing the application with npm<br>
-`terminal` remember change directory
-```
-npm init
-```
-provide constant for use where HTTPstatus codes are needed in your application's responses<br>
-`terminal`
-```
-npm i http-status-codes -S
-or
-npm i http-status-codes -save-dev
-```
 # Express.js
 
 ```
@@ -32,19 +19,7 @@ app.post("/contact", (req, res) => {
 | "/contact" | path(URL)                                          |
 | (req, res) | callback                                           |
 
-<details><summary>HTTPmethod</summary>
 
-- GET
-- POST
-- PUT
-- HEAD
-- DELETE
-- PATCH
-- OPTIONS
-- CONNECT
-- TRACE
-
-</details>
 
 <br>
 

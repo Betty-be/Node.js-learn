@@ -1,3 +1,18 @@
+<details><summary>HTTPmethod</summary>
+
+- GET
+- POST
+- PUT
+- HEAD
+- DELETE
+- PATCH
+- OPTIONS
+- CONNECT
+- TRACE
+
+</details>
+
+
 ## Table
 網頁的表格，，多作為整張表格的父標籤之用，多內含th、tr、td等子標籤。
 
@@ -9,3 +24,4 @@ table data
 
 >### th
 table header
+
