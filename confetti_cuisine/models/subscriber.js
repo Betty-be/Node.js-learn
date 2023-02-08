@@ -17,7 +17,9 @@ const mongoose = require("mongoose"),
         },
         // if wanted to restrict subscribers to one course at a time, remove the brackets arouund the property
         courses: [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}]
-    });
+    },
+    {timestamps: true}
+    );
 
 subscriberSchema.methods.getInfo = function() {
     return `Name: ${this.name} Email: ${this.email} Zip Code: ${this.zipCode}`;

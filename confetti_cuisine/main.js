@@ -3,9 +3,9 @@ const express = require("express"),
     errorController = require("./controllers/errorController"),
     homeController = require("./controllers/homeController"),
     subscribersController = require("./controllers/subscribersController"),
+    usersController = require("./controllers/usersController"),
     layouts = require("express-ejs-layouts"),
-    mongoose = require("mongoose"),
-    Subscriber = require("./models/subscriber");
+    mongoose = require("mongoose");
 
 
 mongoose.set('strictQuery', false);
@@ -21,23 +21,6 @@ db = mongoose.connection;
 db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
-// Subscriber.create(
-//     {
-//         name: "Professor sofa",
-//         email: "sofafafa@easy.com"
-//     },
-//     function(error, savedDocument) {
-//         if(error) console.log(error);
-//         console.log(savedDocument);
-//     }
-// );
-// var myQuery = Subscriber.findOne({
-//     name: "Jon Wexler"
-// })
-//     .where("email", /wexler/);
-// myQuery.exec((error, data) => {
-//     if (data) console.log(data.name);
-// });
 
 app.set("port", process.env.PORT || 3000);
 
@@ -68,7 +51,10 @@ app.get("/contact", subscribersController.getSubscriptionPage);
 // handle subscription data
 app.post("/subscribe", subscribersController.saveSubscriber);
 
-app.get("/subscribers", subscribersController.getAllSubscribers);
+app.get("/subscribers", subscribersController.index);
+
+app.get("/users", usersController.index, usersController.indexView);
+app.post("/users/create",)
 
 
 // handling error

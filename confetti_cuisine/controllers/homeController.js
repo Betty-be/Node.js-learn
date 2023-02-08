@@ -13,15 +13,16 @@ var courses = [
     }
   ];
   
-exports.showCourses = (req, res) => {
+module.exports= {
+  showCourses: (req, res) => {
     res.render("courses", {
-        offeredCourses: courses
+      offeredCourses: courses
     });
-};
-
-exports.showSignUp = (req, res) => {
-  res.render("contact");
-};
-exports.postedSignUpForm = (req, res) => {
-  res.render("thanks");
+  },
+  showSignUp: (req, res) => {
+    res.render("contact");
+  },
+  postedSignUpForm: (req, res) => {
+    res.render("thanks");
+  }
 };
