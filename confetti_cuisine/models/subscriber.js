@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-    subscriberSchema = mongoose.Schema({
+    subscriberSchema = new mongoose.Schema({
         name: {
             type: String,
             required: true
@@ -14,7 +14,9 @@ const mongoose = require("mongoose"),
             type: Number,
             min: [10000, "Zip code too short"],
             max: 99999
-        }
+        },
+        // if wanted to restrict subscribers to one course at a time, remove the brackets arouund the property
+        courses: [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}]
     });
 
 subscriberSchema.methods.getInfo = function() {
