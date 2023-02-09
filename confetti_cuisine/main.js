@@ -1,5 +1,7 @@
 const express = require("express"),
     app = express(),
+    router = express.Router(),
+    methodOverride = require("method-override"),
     errorController = require("./controllers/errorController"),
     homeController = require("./controllers/homeController"),
     subscribersController = require("./controllers/subscribersController"),
@@ -24,42 +26,55 @@ db.once("open", () => {
 
 app.set("port", process.env.PORT || 3000);
 
+app.use("/", router);
+
 // set view engine as ejs
 // This line is how application knows to expect EJS in views folder in main project directory
 app.set("view engine", "ejs");
 // let express.js know to use this package as an additional middleware layer
-app.use(layouts);
+router.use(layouts);
 // serving static files
-app.use(express.static("public"));
+router.use(express.static("public"));
 
 // body-parser
-app.use(
+router.use(
     express.urlencoded({
         extended: false
     })
 );
-app.use(express.json());
+router.use(express.json());
 
-app.get("/", (req, res) => {
+// interpret the "POST" request as "PUT"
+router.use(methodOverride("_method", {
+    methods: ["POST", "GET"]
+}));
+
+router.get("/", (req, res) => {
     res.render("index");
   });
 
 // view course listings
-app.get("/courses", homeController.showCourses);
-// get contact page
-app.get("/contact", subscribersController.getSubscriptionPage);
-// handle subscription data
-app.post("/subscribe", subscribersController.saveSubscriber);
+router.get("/courses", homeController.showCourses);
 
-app.get("/subscribers", subscribersController.index);
+router.get("/subscribers", subscribersController.index, subscribersController.indexView);
+router.get("/subscribers/new", subscribersController.new);
+router.post("/subscribers/create", subscribersController.create, subscribersController.redirectView);
+router.get("/subscirbers/:id", subscribersController.show, subscribersController.showView);
+router.get("/subscribers/:id/edit", subscribersController.edit);
+router.put("/subscribers/:id/update", subscribersController.update, subscribersController.redirectView);
+router.delete("/subscribers/:id/delete", subscribersController.delete, subscribersController.redirectView);
 
-app.get("/users", usersController.index, usersController.indexView);
-app.post("/users/create",)
-
+router.get("/users", usersController.index, usersController.indexView);
+router.get("/users/new", usersController.new);
+router.post("/users/create",usersController.create, usersController.redirectView);
+router.get("/users/:id", usersController.show, usersController.showView);
+router.get("/users/:id/edit", usersController.edit);
+router.put("/users/:id/update", usersController.update, usersController.redirectView);
+router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
 
 // handling error
-app.use(errorController.pageNotFoundError);
-app.use(errorController.internalServerError);
+router.use(errorController.pageNotFoundError);
+router.use(errorController.internalServerError);
 
 
 app.listen(app.get("port"),() => {
