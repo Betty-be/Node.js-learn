@@ -2,12 +2,18 @@ const express = require("express"),
     app = express(),
     router = express.Router(),
     methodOverride = require("method-override"),
+    expressSession = require("express-session"),
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash"),
+    passport = require("passport"),
+    expressValidator = require("express-validator"),
     errorController = require("./controllers/errorController"),
     homeController = require("./controllers/homeController"),
     subscribersController = require("./controllers/subscribersController"),
     usersController = require("./controllers/usersController"),
     layouts = require("express-ejs-layouts"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    User = requirt("./models/user");
 
 
 mongoose.set('strictQuery', false);
@@ -49,6 +55,35 @@ router.use(methodOverride("_method", {
     methods: ["POST", "GET"]
 }));
 
+// configure Express.js application to use cookie-parser as middleware
+router.use(cookieParser("secret_passcode"));
+
+// configure express-session to use cookie-parser
+router.use(expressSession({
+    secret: "secret_passcode",
+    cookie: {
+        maxAge: 4000000
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+
+router.use(connectFlash());
+
+router.use(passport.initialize());
+router.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Assign flash messages to the local flashMessages variable on the response object
+router.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
+
+router.use(expressValidator());
+
 router.get("/", (req, res) => {
     res.render("index");
   });
@@ -66,7 +101,10 @@ router.delete("/subscribers/:id/delete", subscribersController.delete, subscribe
 
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
+router.post("/users/create", usersController.validate, usersController.create, usersController.redirectView);
 router.post("/users/create",usersController.create, usersController.redirectView);
+router.get("/users/login", usersController.login);
+router.post("/users/login", usersController.authenticate, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
