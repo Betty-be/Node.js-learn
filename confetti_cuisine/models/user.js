@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"),
     bcrypt = require("bcrypt"),
+    passportLocalMongoose = require("passport-local-mongoose"),
     {Schema} =mongoose,
     Subscriber = require("./subscriber"),
     userSchema = new Schema({
@@ -22,10 +23,6 @@ const mongoose = require("mongoose"),
             type: Number,
             min: [10000, "Zip code too short"],
             max: 99999
-        },
-        password: {
-            type: String,
-            required: true
         },
         courses: [{type: Schema.Types.ObjectId, ref: "Course"}],
         subscribedAccount: {type: Schema.Types.ObjectId, ref: "Subscriber"}
@@ -58,21 +55,27 @@ userSchema.pre("save", function(next) {
 
 userSchema.pre("save", function(next){
     let user = this;
-    bcrypt.hash(user.password, 10).then(hash => {
-        user.password = hash;
+    if (user.subscribedAccount === undefined) {
+        Subscriber.findOne({
+            email: user.email
+        })
+        .then(subscriber => {
+            user.subscribedAccount = subscriber;
+            next();
+        })
+        .catch(error => {
+            console.log(`Error in connecting subscriber: ${error.message}`);
+            next(error);
+        });
+    } else {
         next();
-    })
-    .catch(error => {
-        console.log(`Error in hashing password: ${error.message}`);
-        next(error);
-    });
+    }    
 });
 
-// add a function to compare hashed passwords
-userSchema.methods.passwordComparison = function(inputPassword){
-    let user = this;
-    // compare the user password with the stored password
-    return bcrypt.compare(inputPassword, user.password);
-};
+
+// using `plugin` method, tell userSchema to use passportLocalMongoose for password hashing and storage
+userSchema.plugin(passportLocalMongoose, {
+    usernameField: "email"
+});
 
 module.exports = mongoose.model("User", userSchema);
