@@ -13,16 +13,11 @@ var courses = [
     }
   ];
   
-module.exports= {
-  showCourses: (req, res) => {
-    res.render("courses", {
-      offeredCourses: courses
-    });
-  },
-  showSignUp: (req, res) => {
-    res.render("contact");
-  },
-  postedSignUpForm: (req, res) => {
-    res.render("thanks");
-  }
-};
+  module.exports = {
+    index: (req, res) => {
+      res.render("index");
+    },
+    contact: (req, res) => {
+      res.render("contact");
+    }
+  };
