@@ -3,6 +3,7 @@
 const express = require("express"),
     app = express(),
     router = require("./routes/index"),
+    // Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
     methodOverride = require("method-override"),
     expressSession = require("express-session"),
     cookieParser = require("cookie-parser"),
